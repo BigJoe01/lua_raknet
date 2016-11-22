@@ -16,8 +16,8 @@ extern "C"
 #define DRaknetBitStreamPrintsBuffer 4096
 
 inline RakNet::BitStream* RAKBITSTREAM_CHECK(lua_State* l, int iIndex);
-inline RakNet::BitStream* RAKBITSTREAM_NEW(lua_State* l, int iMetaRef, unsigned char* pData, int iDataSize, bool bCopy);
-inline RakNet::BitStream* RAKBITSTREAM_RECREATE(lua_State* l, int iIndex, int iMetaRef, unsigned char* pData, int iDataSize, bool bCopy);
+RakNet::BitStream* RAKBITSTREAM_NEW(lua_State* l, int iMetaRef, unsigned char* pData, int iDataSize, bool bCopy);
+RakNet::BitStream* RAKBITSTREAM_RECREATE(lua_State* l, int iIndex, int iMetaRef, unsigned char* pData, int iDataSize, bool bCopy);
 
 struct SLuaBitstream
 {

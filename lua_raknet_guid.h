@@ -14,6 +14,6 @@ extern "C"
 #define DRaknetGuidMeta ":raknet_guid:"
 
 inline RakNet::RakNetGUID* RAKGUID_CHECK(lua_State* l, int iIndex);
-inline RakNet::RakNetGUID* RAKGUID_NEW(lua_State* l, int iMetaRef, int id);
+RakNet::RakNetGUID* RAKGUID_NEW(lua_State* l, int iMetaRef, int id);
 
 int luaopen_raknet_guid(lua_State *l);

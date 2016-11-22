@@ -7,7 +7,7 @@
 // Guid is unique identifier in raknet 
 // @module Guid
 
-RakNet::RakNetGUID* RAKGUID_CHECK(lua_State* l, int iIndex)
+inline RakNet::RakNetGUID* RAKGUID_CHECK(lua_State* l, int iIndex)
 {
 	assert(lua_gettop(l) > 0);
 #ifdef _DEBUG

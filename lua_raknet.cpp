@@ -13,8 +13,6 @@
 #include "RakPeer.h"
 #include "RakSleep.h"
 #include "RakNetTypes.h"
-#include "RakPeerInterface.h"
-#include "PluginInterface2.h"
 #include "BitStream.h"
 #include "RakNetTime.h"
 #include "GetTime.h"
