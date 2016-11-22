@@ -27,6 +27,7 @@
 #include "lua_raknet_guid.h"
 #include "lua_raknet_bitstream.h"
 #include "lua_raknet_plugin_console.h"
+#include "lua_raknet_plugin_relay.h"
 #include "lua_raknet_helper.h"
 
 
@@ -1322,6 +1323,10 @@ static int raknet_module_new_bitstream(lua_State* l)
 		RakNet::Packet* pPacket = (RakNet::Packet*)lua_touserdata(l, 1);
 		pBitStream = RAKBITSTREAM_NEW(l, Peer->iMetaBitStream_Ref, pPacket->data, pPacket->length, true);
 	}
+	else if (iTop == 1 && iType == LUA_TNUMBER)
+	{
+		pBitStream = RAKBITSTREAM_NEW(l, Peer->iMetaBitStream_Ref, nullptr, lua_tointeger(l,1), true );
+	}
 	else
 	{
 		assert(false);
@@ -1399,12 +1404,31 @@ static const struct luaL_Reg raknet_module [] = {
 	{NULL, NULL}
 };
 
+
 //---------------------------------------------------------------------------
-// Default raknet module
+// Default raknet plugins
 //---------------------------------------------------------------------------
 
+/// Create new relay plugin
+//  @function new_relay
+//  @param RakPeer
+//  @param bAutoAttach
+//  @return RelayPlugin lightuserdata
+//  @usage raknet_plugin.new_relay( Peer, true )
+static int raknet_plugin_relay(lua_State* l)
+{
+	assert(lua_gettop(l) > 1 );
+	RAKPEER* Peer = RAKPEER_CHECK(l, 1);
+	bool     bAutoAttach = lua_toboolean(l,2);
+	RakNet::PluginInterface2* pPlugin = RAKPLUGIN_RELAY_NEW(l, Peer );
+	if ( bAutoAttach )
+		Peer->pPeer->AttachPlugin(pPlugin);
+	assert(pPlugin);
+	return 1;
+}
+
 static const struct luaL_Reg raknet_plugins[] = {
-	
+	{"new_relay", raknet_plugin_relay },
 	{ NULL, NULL }
 };
 
@@ -1430,5 +1454,6 @@ int luaopen_raknet(lua_State *l)
 	luaopen_raknet_security_key( l );
 	luaopen_socket_descriptor( l );
 	luaopen_raknet_module( l );
+	luaopen_raknet_relay( l );
 	return 1;
 }
